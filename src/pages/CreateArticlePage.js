@@ -20,4 +20,59 @@ export class CreateArticlePage {
       await expect(this.errorMessage).toContainText(messageText);
     });
   }
+
+  async fillArticleFormTitle(title) {
+    await test.step('Fill the article title field', async () => {
+      await this.page.getByPlaceholder('Article Title').fill(title);
+    });
+  }
+
+  async fillArticleFormDescription(description) {
+    await test.step('Fill the article description field', async () => {
+      await this.page
+        .getByPlaceholder("What's this article about?")
+        .fill(description);
+    });
+  }
+
+  async fillArticleFormBody(body) {
+    await test.step('Fill the article body field', async () => {});
+    await this.page.getByPlaceholder('Write your article (in').fill(body);
+  }
+
+  async fillArticleFormTag(tags) {
+    await test.step('Fill the article tags field', async () => {});
+    await this.page.getByPlaceholder('Enter tags').fill(tags);
+    await this.page.keyboard.press('Tab');
+  }
+
+  async assertArticleTitleIsCorrect(title) {
+    await test.step(`Assert the article title is correct`, async () => {
+      await expect(
+        this.page.getByRole('heading', { name: title }),
+      ).toBeVisible();
+    });
+  }
+
+  async assertArticleBodyIsCorrect(body) {
+    await test.step(`Assert the article body is correct`, async () => {
+      await expect(
+        this.page.locator('.col-md-12').filter({ hasText: body }),
+      ).toBeVisible();
+    });
+  }
+
+  async assertArticleTagsAreCorrect(tags) {
+    await test.step(`Assert the article tags are correct`, async () => {
+      await expect(
+        this.page.locator('.tag-default').filter({ hasText: tags }),
+      ).toBeVisible();
+    });
+  }
+
+  async assertArticleTagsAreNotVisible() {
+    await test.step(`Assert the article tags are not visible`, async () => {
+      await expect(this.page.locator('.tag-default')).not.toBeVisible();
+    });
+  }
 }

@@ -36,14 +36,18 @@ export class CreateArticlePage {
   }
 
   async fillArticleFormBody(body) {
-    await test.step('Fill the article body field', async () => {});
-    await this.page.getByPlaceholder('Write your article (in').fill(body);
+    await test.step('Fill the article body field', async () => {
+      await this.page
+        .getByPlaceholder('Write your article (in markdown)')
+        .fill(body);
+    });
   }
 
   async fillArticleFormTag(tags) {
-    await test.step('Fill the article tags field', async () => {});
-    await this.page.getByPlaceholder('Enter tags').fill(tags);
-    await this.page.keyboard.press('Tab');
+    await test.step('Fill the article tags field', async () => {
+      await this.page.getByPlaceholder('Enter tags').fill(tags);
+      await this.page.keyboard.press('Enter');
+    });
   }
 
   async assertArticleTitleIsCorrect(title) {

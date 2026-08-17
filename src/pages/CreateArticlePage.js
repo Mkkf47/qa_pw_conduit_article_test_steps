@@ -45,8 +45,12 @@ export class CreateArticlePage {
 
   async fillArticleFormTag(tags) {
     await test.step('Fill the article tags field', async () => {
-      await this.page.getByPlaceholder('Enter tags').fill(tags);
-      await this.page.keyboard.press('Enter');
+      await test.step(`Fill the article tags field with ${tags}`, async () => {
+        await this.page.getByPlaceholder('Enter tags').fill(tags);
+      });
+      await test.step('Press "Enter" to save tag', async () => {
+        await this.page.keyboard.press('Enter');
+      });
     });
   }
 
